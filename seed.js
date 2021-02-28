@@ -2,6 +2,7 @@ const sequelize = require("./database/db");
 const Post = require("./database/models/post");
 const Address = require("./database/models/address");
 const User = require("./database/models/user");
+const Band = require("./database/models/band");
 require("./database/associations");
 
 // Usuarios:
@@ -51,12 +52,78 @@ sequelize
   // .then(() => {
   //   // Rellenar usuarios
   //   users.forEach((user) => User.create(user));
+  // });
+  // .then(() => {
+  //   // Rellenar direcciones
+  //   addresses.forEach((address) => Address.create(address));
   // })
-  .then(() => {
-    // Rellenar direcciones
-    addresses.forEach((address) => Address.create(address));
-  })
-  .then(() => {
-    // Rellenar posts
-    posts.forEach((post) => Post.create(post));
+  // .then(() => {
+  //   // Rellenar posts
+  //   posts.forEach((post) => Post.create(post));
+  // });
+  // .then(async () => {  // 1ra forma de crear users y bands
+  //   let band1 = await Band.create(
+  //     {
+  //       name: "Alquimia",
+  //       type: "Salsa",
+  //       users: [
+  //         { name: "Lucia", age: 18, email: "lucia@mail.com" },
+  //         { name: "Alberto", age: 22, email: "alberto@mail.com" },
+  //       ],
+  //     },
+  //     {
+  //       include: "users",
+  //     }
+  //   );
+  // });
+
+  // .then(async () => {
+  //   // 2da forma de crear users y bands
+  //   let user1 = await User.create({
+  //     name: "Sergio",
+  //     age: 38,
+  //     email: "sergio@mail.com",
+  //   });
+  //   let user2 = await User.create({
+  //     name: "Monica",
+  //     age: 44,
+  //     email: "monica@mail.com",
+  //   });
+
+  //   let band2 = await Band.create({
+  //     name: "Los Hermanos Rosario",
+  //     type: "Merenge",
+  //   });
+
+  //   band2.addUsers([user1, user2]);
+  // });
+
+  .then(async () => {
+    // 3da forma de crear users y bands
+    let user1 = await User.create({
+      name: "Sergiodos",
+      age: 38,
+      email: "sergio2@mail.com",
+    });
+    let user2 = await User.create({
+      name: "Monicados",
+      age: 44,
+      email: "monica2@mail.com",
+    });
+
+    let band2 = await Band.create({
+      name: "Grupo Niche",
+      type: "Salsa",
+    });
+
+    band2.addUser(user1);
+    band2.addUser(user2);
+
+    let user3 = await User.create({
+      name: "paula",
+      age: 38,
+      email: "paula@mail.com",
+    });
+
+    user3.setBands([band2]);
   });

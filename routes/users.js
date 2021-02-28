@@ -39,11 +39,20 @@ router.get("/:id/residency", (req, res) => {
   });
 });
 
-// Ver los posts de usuario /api/users/:id/residency
+// Ver los posts de usuario /api/users/:id/publications
 router.get("/:id/publications", (req, res) => {
   User.findByPk(req.params.id).then((user) => {
     user.getPublications().then((publications) => {
       res.json(publications);
+    });
+  });
+});
+
+// Ver las bandas del usuario /api/users/:id/bands
+router.get("/:id/bands", (req, res) => {
+  User.findByPk(req.params.id).then((user) => {
+    user.getBands({ attributes: ["name", "type"] }).then((bands) => {
+      res.json(bands);
     });
   });
 });

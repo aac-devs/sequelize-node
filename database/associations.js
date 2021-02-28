@@ -1,9 +1,9 @@
 const Post = require("./models/post");
 const Address = require("./models/address");
 const User = require("./models/user");
-const { drop } = require("./db");
+const Band = require("./models/band");
 
-// Relación uno a uno
+// Relación 1a1
 // El usuario tiene una dirección:
 // Añade una clave foránea del tipo userId a la tabla addresses:
 User.hasOne(Address, { as: "residency", foreignKey: "residentId" });
@@ -11,14 +11,19 @@ User.hasOne(Address, { as: "residency", foreignKey: "residentId" });
 // Añade una clave userId a la tabla addresses
 Address.belongsTo(User, { as: "resident", foreignKey: "residentId" });
 
-// Relación uno a muchos
+// Relación 1aN
 // Usuario va a tener muchos posts o publicaciones
 // Se añade una clave userId a la tabla posts
 User.hasMany(Post, { as: "publications", foreignKey: "authorId" });
 // Se añade una clave userId a la tabla posts
 Post.belongsTo(User, { as: "author" });
 
-
+// Relación NaN
+// El usuario pertenezca a varias bandas.
+// Esto crea una nueva tabla en la base de datos llamada user_band
+// Añade funciones como: user.addBand, user.getBands, etc.
+User.belongsToMany(Band, { through: "user_band" });
+Band.belongsToMany(User, { through: "user_band" });
 
 //
 //
