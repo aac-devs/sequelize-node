@@ -1,10 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../database/models/post");
+const User = require("../database/models/user");
 
 // INDEX /api/posts
 router.get("/", (req, res) => {
-  Post.findAll().then((posts) => {
+  Post.findAll({
+    // Se incluye el modelo usuario, del cual solo se muestra el nombre
+    include: {
+      model: User,
+      as: "author",
+      attributes: ["name"],
+    },
+    // De cada post solo se devuelven 'title' y 'body'
+    attributes: ["title", "body"],
+  }).then((posts) => {
     res.json(posts);
   });
 });

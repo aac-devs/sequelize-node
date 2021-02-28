@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const sequelize = require("./database/db");
+require("./database/associations");
 
 const port = process.env.PORT || 4000;
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 // Rutas:
 app.use("/api/posts", require("./routes/post"));
 app.use("/api/users", require("./routes/users"));
+app.use("/api/addresses", require("./routes/addresses"));
 
 // Server running:
 app.listen(port, () => {

@@ -46,11 +46,11 @@ User.init(
           args: 1,
           msg: "La edad tiene que ser mayor o igual que uno",
         },
-        esPar(value) {
-          if (value % 2) {
-            throw new Error("La edad tiene que ser un número par");
-          }
-        },
+        // esPar(value) {
+        //   if (value % 2) {
+        //     throw new Error("La edad tiene que ser un número par");
+        //   }
+        // },
       },
     },
     // Si es 0 es usuario normal, si es 1 es administrador
